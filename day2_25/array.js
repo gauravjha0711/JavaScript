@@ -33,7 +33,7 @@ fruits.push("Pineapple");
 console.log("Updated Fruits:", fruits);
 console.log("Length of Fruits:", fruits.length);
 
-console.log("n\7 Adding Element using unshift()\n");
+console.log("\n7 Adding Element using unshift()\n");
 fruits.unshift("Strawberry");
 console.log("Updated Fruits:", fruits);
 console.log("Length of Fruits:", fruits.length);
