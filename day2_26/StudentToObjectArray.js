@@ -54,3 +54,39 @@ console.log("\n=====End of Object ======\n");
 
 
 
+var students = [
+    {
+        id:1,
+        name:"Gaurav",
+        age:21,
+        grade: "A"
+    },
+    {
+        id:2,
+        name:"Kundan",
+        age:22,
+        grade: "B"
+    },
+    {
+        id:3,
+        name:"Krishna",
+        age:20,
+        grade: "A"
+    }
+];
+
+console.log("Studentss Array Created Successfully\n");
+console.log("Accessing First Student:");
+console.log("Name:",students[0].name);
+console.log("Grade:",students[0].grade);
+
+console.log("\nLoopng using for loop:\n");
+for(var i=0;i<students.length;i++){
+    console.log("Student "+(i+1)+":");
+    console.log("Student ID: "+students[i].id);
+    console.log("Name: "+students[i].name);
+    console.log("Age: "+students[i].age);
+    console.log("Grade: "+students[i].grade);
+    console.log("-------------------");
+}
+
