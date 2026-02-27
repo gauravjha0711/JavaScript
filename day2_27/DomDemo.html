@@ -8,9 +8,44 @@
 <body>
     <h1 id="title">Hello Student</h1>
     <button onClick="changeText()">Click Me</button>
+    <br><br>
+
+    <p id="message">This is dynamic paragraph change color</p>
+    <button onclick="changeColor()">Change Color</button>
+    <br><br>
+
+    <input type="password" id="password">
+    <button onclick="togglePassword()">show password</button>
+    <br><br>
+
+    <input type="text" id="textInput">
+    <button onClick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
     <script>
         function changeText() {
             document.getElementById("title").innerHTML = "Welcome to JavaScript!";
+        }
+        function changeColor() {
+            document.getElementById("message").style.color = "blue";
+        }
+        function togglePassword(){
+            let input = document.getElementById("password");
+            let toggleBtn = document.querySelector("button[onclick='togglePassword()']");
+            if(input.type==="password"){
+                input.type="text";
+                toggleBtn.innerHTML = "Hide Password";
+            }
+            else{
+                input.type="password";
+                toggleBtn.innerHTML = "Show Password";
+            }
+        }
+        function addTask(){
+            let taskValue = document.getElementById("textInput").value;
+            let li = document.createElement("li");
+            li.innerHTML = taskValue;
+            document.getElementById("taskList").appendChild(li);
+            document.getElementById("textInput").value = "";
         }
     </script>
 </body>
