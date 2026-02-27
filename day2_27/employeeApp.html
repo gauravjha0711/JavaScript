@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 Employee Management App</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        input, button{
+            padding: 5px;
+            margin: 5px;
+        }
+        .employee-card{
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px 0px;
+            border-radius: 5px;
+        }
+        .employee-card:hover{
+            background-color: #f0f8ff;
+        }
+    </style>
+</head>
+<body>
+    <h2>🔥 ES6 Employee Management App</h2>
+
+    <h3>Add New Employee</h3>
+    <input type="text" id="name" placeholder="Employee Name">
+    <input type="text" id="dept" placeholder="Department">
+    <input type="number" id="salary" placeholder="Salary">
+    <button id="addBtn">Add Employee</button>
+
+    <h3>Search Employee</h3>
+    <input type="text" id="search" placeholder="Search by Name">
+    <button id="searchBtn">Search</button>
+
+    <h3>Employee List</h3>
+    <div id="employeeList"></div>
+
+    <h3>Salary Statistics</h3>
+    <button id="totalSalaryBtn">Total Salary</button>
+    <button id="avgSalaryBtn">Average Salary</button>
+    <button id="highestSalaryBtn">Highest Salary</button>
+
+    <p id="result"></p>
+
+</body>
+</html>
