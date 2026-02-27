@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Reduce Method Example</h2>
+    <p>Numbers: 10, 20, 30, 40, 50</p>
+    <button onclick="calculateTotal()">Calculate Total</button>
+    <h3 id="total"></h3>
+
+    <script>
+        //array of numbers
+        const numbers = [10, 20, 30, 40, 50];
+        //reduce method to calculate total
+        //sum = accumulator, num = current value
+        const total = numbers.reduce((sum,num)=>{
+            return sum + num;
+        },0);  //0 is initial value for sum
+        //display total on button click
+        function calculateTotal(){
+            document.getElementById("total").innerText = "Total: " + total;
+        }
+    </script>
+</body>
+</html>
