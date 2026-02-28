@@ -1,51 +1,256 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ES6 Employee Management App</title>
     <style>
-        body{
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        input, button{
-            padding: 5px;
-            margin: 5px;
-        }
-        .employee-card{
+        body { font-family: Arial; padding: 20px; }
+        input, button { margin: 5px; padding: 5px; }
+        .employee-card {
             border: 1px solid #ccc;
             padding: 10px;
-            margin: 5px 0px;
+            margin: 5px 0;
             border-radius: 5px;
         }
-        .employee-card:hover{
+        .employee-card:hover {
             background-color: #f0f8ff;
         }
     </style>
 </head>
 <body>
-    <h2>🔥 ES6 Employee Management App</h2>
 
-    <h3>Add New Employee</h3>
-    <input type="text" id="name" placeholder="Employee Name">
-    <input type="text" id="dept" placeholder="Department">
-    <input type="number" id="salary" placeholder="Salary">
-    <button id="addBtn">Add Employee</button>
+<h2>🔥 ES6 Employee Management App</h2>
 
-    <h3>Search Employee</h3>
-    <input type="text" id="search" placeholder="Search by Name">
-    <button id="searchBtn">Search</button>
+<h3>Add Employee</h3>
+<input type="text" id="name" placeholder="Name">
+<input type="text" id="dept" placeholder="Department">
+<input type="number" id="salary" placeholder="Salary">
+<button id="addBtn">Add Employee</button>
 
-    <h3>Employee List</h3>
-    <div id="employeeList"></div>
+<h3>Search Employee</h3>
+<input type="text" id="search" placeholder="Search by Name">
 
-    <h3>Salary Statistics</h3>
-    <button id="totalSalaryBtn">Total Salary</button>
-    <button id="avgSalaryBtn">Average Salary</button>
-    <button id="highestSalaryBtn">Highest Salary</button>
+<h3>Employee List</h3>
+<div id="employeeList"></div>
 
-    <p id="result"></p>
+<h3>Salary Statistics</h3>
+<button id="totalSalaryBtn">Total Salary</button>
+<button id="avgSalaryBtn">Average Salary</button>
+<button id="highestSalaryBtn">Highest Paid</button>
+
+<p id="result"></p>
+<script>
+
+    // =====================================================
+    // 1️⃣ ES6 CLASS (Blueprint for Employee Object)
+    // =====================================================
+    // Class is introduced in ES6
+    // It is used to create objects in structured way
+
+    class Employee {
+
+        // Constructor runs automatically when new object is created
+        constructor(id, name, dept, salary) {
+
+            // "this" refers to current object
+            this.id = id;
+            this.name = name;
+            this.dept = dept;
+            this.salary = salary;
+        }
+
+        // Arrow function method (ES6)
+        // Calculates annual salary
+        getAnnualSalary = () => this.salary * 12;
+    }
+
+
+    // =====================================================
+    // 2️⃣ Data Storage (Array + ID Generator)
+    // =====================================================
+
+    // Array to store all employees
+    let employees = [];
+
+    // Counter for auto increment ID
+    let idCounter = 1;
+
+
+
+    // =====================================================
+    // 3️⃣ Display Employees Function
+    // =====================================================
+    // Arrow function (ES6)
+    // Accepts employee list and displays in UI
+
+    const displayEmployees = (list) => {
+
+        // Get container div from HTML
+        const container = document.getElementById("employeeList");
+
+        // Clear previous content before rendering again
+        container.innerHTML = "";
+
+        // forEach loop (ES6)
+        list.forEach(emp => {
+
+            // Object Destructuring (ES6)
+            const { id, name, dept, salary } = emp;
+
+            // Template Literals (Backticks ` `)
+            // Used for dynamic HTML rendering
+            container.innerHTML += `
+                <div class="employee-card">
+                    <strong>${name}</strong><br>
+                    Dept: ${dept}<br>
+                    Salary: ₹${salary}<br>
+                    <button onclick="deleteEmployee(${id})">
+                        Delete
+                    </button>
+                </div>
+            `;
+        });
+    };
+
+
+
+    // =====================================================
+    // 4️⃣ Add Employee (Event Listener)
+    // =====================================================
+
+    // addEventListener is modern way to handle events
+    document.getElementById("addBtn")
+    .addEventListener("click", () => {
+
+        // Get input values from form
+        const name = document.getElementById("name").value;
+        const dept = document.getElementById("dept").value;
+
+        // Convert salary string to number
+        const salary = Number(document.getElementById("salary").value);
+
+        // Simple validation
+        if (!name || !dept || !salary) {
+            alert("Please fill all fields");
+            return; // Stop execution
+        }
+
+        // Create new Employee object
+        const newEmployee = new Employee(
+            idCounter++,  // Auto increment ID
+            name,
+            dept,
+            salary
+        );
+
+        // Spread Operator (ES6)
+        // Creates new array instead of modifying existing one
+        employees = [...employees, newEmployee];
+
+        // Refresh UI
+        displayEmployees(employees);
+
+        // Clear input fields after adding
+        document.getElementById("name").value = "";
+        document.getElementById("dept").value = "";
+        document.getElementById("salary").value = "";
+    });
+
+
+
+    // =====================================================
+    // 5️⃣ Delete Employee
+    // =====================================================
+
+    const deleteEmployee = (id) => {
+
+        // filter() creates new array excluding deleted employee
+        employees = employees.filter(emp => emp.id !== id);
+
+        // Refresh UI
+        displayEmployees(employees);
+    };
+
+
+
+    // =====================================================
+    // 6️⃣ Live Search (Real-Time Filtering)
+    // =====================================================
+
+    document.getElementById("search")
+    .addEventListener("input", (e) => {
+
+        // Get search text
+        const value = e.target.value.toLowerCase();
+
+        // filter employees whose name includes search text
+        const filtered = employees.filter(emp =>
+            emp.name.toLowerCase().includes(value)
+        );
+
+        // Display filtered list
+        displayEmployees(filtered);
+    });
+
+
+
+    // =====================================================
+    // 7️⃣ Salary Statistics (Using reduce)
+    // =====================================================
+
+
+    // 🔹 Total Salary
+    document.getElementById("totalSalaryBtn")
+    .addEventListener("click", () => {
+
+        // reduce() accumulates values
+        const total = employees.reduce(
+            (sum, emp) => sum + emp.salary,
+            0
+        );
+
+        document.getElementById("result").textContent =
+            `Total Salary: ₹${total}`;
+    });
+
+
+
+    // 🔹 Average Salary
+    document.getElementById("avgSalaryBtn")
+    .addEventListener("click", () => {
+
+        if (employees.length === 0) return;
+
+        const total = employees.reduce(
+            (sum, emp) => sum + emp.salary,
+            0
+        );
+
+        const avg = total / employees.length;
+
+        document.getElementById("result").textContent =
+            `Average Salary: ₹${avg}`;
+    });
+
+
+
+    // 🔹 Highest Salary
+    document.getElementById("highestSalaryBtn")
+    .addEventListener("click", () => {
+
+        if (employees.length === 0) return;
+
+        // Compare salaries and return highest object
+        const highest = employees.reduce(
+            (max, emp) =>
+                emp.salary > max.salary ? emp : max
+        );
+
+        document.getElementById("result").textContent =
+            `Highest Paid: ${highest.name} (₹${highest.salary})`;
+    });
+
+
+</script>
 
 </body>
 </html>
